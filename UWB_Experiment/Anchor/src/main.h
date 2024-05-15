@@ -6,6 +6,9 @@
 
 #include "DW1000Ranging.h"
 
+#define CALIBRATION_DISTANCE 1.83
+#define CALIBRATION_SHORT_ID 0xFFFF
+
 #define ANCHOR_ID 2
 
 #define SPI_SCK 18
@@ -23,3 +26,5 @@ void inactiveDevice(DW1000Device *device);
 void newBlink(DW1000Device *device);
 
 void newRange();
+
+void StartAnchor();
