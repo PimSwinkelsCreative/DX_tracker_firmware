@@ -21,8 +21,8 @@ float tagPosition[] = {0, 0};
 
 void setup() {
   size(800, 800);
-  
-  
+
+
   //open the serial ports:
   anchor1 = new Serial(this, Serial.list()[0], 115200);
   anchor2 = new Serial(this, Serial.list()[1], 115200);
@@ -59,9 +59,10 @@ void draw() {
 }
 
 void serialEvent(Serial thisPort) {
-
   //parse the incoming string:
   String inputString = thisPort.readString();
+  print("input: ");
+  println(inputString);
   String inputFields[] = split(inputString, '\t');
   int currentAnchor = 0;
   for (int i = 0; i < inputFields.length; i++) {
@@ -79,27 +80,27 @@ void serialEvent(Serial thisPort) {
           anchor2Distance = inDistance;
         }
       }
+      //calculate the tag position based on the new info:
+      calculateTagPosition();
+
+
+      //print all data:
+      String message = "";
+      message+="tagId ";
+      message+=tagId;
+      message+="\tanchor1 distance: ";
+      message+=anchor1Distance;
+      message+="\tanchor2 distance: ";
+      message+=anchor2Distance;
+      message+="\tTag coordinates: ";
+      message+=tagPosition[0];
+      message+=" ";
+      message+=tagPosition[1];
+      println(message);
     }
   }
 
   //TODO: Handle the "NEW" and "DEL" keywords
-
-
-  //calculate the tag position based on the new info:
-  calculateTagPosition();
-
-
-  //print all data:
-  String message = "";
-  message+="anchor1 distance: ";
-  message+=anchor1Distance;
-  message+="\tanchor2 distance: ";
-  message+=anchor2Distance;
-  message+="\tTag coordinates: ";
-  message+=tagPosition[0];
-  message+=" ";
-  message+=tagPosition[1];
-  println(message);
 }
 
 float metersToPixels(float meters) {
@@ -113,8 +114,8 @@ void setZeroPosition() {
 }
 
 void calculateTagPosition() {
-  if(anchor1Distance<0||anchor2Distance<0||anchor1Distance>10||anchor2Distance>10) return;
-   
+  if (anchor1Distance<0||anchor2Distance<0||anchor1Distance>10||anchor2Distance>10) return;
+
   //update the target position usong the law of consines
   float cos_anchor1 = (anchor1Distance*anchor1Distance+setupWidth*setupWidth-anchor2Distance*anchor2Distance)/(2*anchor1Distance*setupWidth);
   float sin_anchor1 = sqrt(1-cos_anchor1*cos_anchor1);
