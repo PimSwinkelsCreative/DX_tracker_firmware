@@ -9,17 +9,14 @@ So far the following results have been reached:
 - Created an automatic Antenna delay sketch
     - Uses a Tag that is at a known distance form the anchor.
     - uses a binary approximation algorithm to re-configure the antenna delay untill the error goes down to 3cm max
-- Created a Processing sketch that communicates to the anchors via Serial and calculates the position of a tag in 2d space. The output is shown below:
-
-[UWB ranging demo.mp4](https://prod-files-secure.s3.us-west-2.amazonaws.com/3c939a49-8303-49f7-b233-f08f2f83ed3d/37767032-bd52-45a7-8085-21f37c324d3b/UWB_ranging_demo.mp4)
+- Created a Processing sketch that communicates to the anchors via Serial and calculates the position of a tag in 2d space.
 
 ## Open issues:
 
 A lot of issues were tackled during testing. Some of them are still unsolved:
 
 - Having multiple achors/tags in the same system caused major interference
-    - Lots of negative distances and distances in the hundreds of meters were measured when two anchors are used
-        - (visible in the video above, the green dot is the tag position and it simply ignores all non valid distance data).
+    - Lots of negative distances and distances in the hundreds of meters were measured when two anchors are used.
     - unplugging everything but 1 anchor and 1 tag immediately solves the problem
     - The following things have been tried to mitigate this problem:
         - Made sure that every tag/anchor uses their own unique ID (they all use the ESP’s MAC address as ID)
